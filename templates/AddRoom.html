@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Room</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Add New Room</h2>
+        <form action="#" method="POST">
+            <label for="room-type">Room Type:</label>
+            <select name="room-type">
+                <option value="king">King Room</option>
+                <option value="single">Single Room</option>
+                <option value="double">Double Room</option>
+                <option value="duplex">Duplex Room</option>
+            </select>
+            <label for="room-number">Room Number:</label>
+            <input type="number" name="room-number">
+            <label for="room-size">Room Size (M<sup>2</sup>):</label>
+            <input type="number" name="room-size">
+            <label for="max-capacity">Max Capacity:</label>
+            <input type="number" name="max-capacity">
+            <label for="price">Price:</label>
+            <input type="number" name="price">
+            <label for="bed">Bed:</label>
+            <select name="bed">
+                <option value="single">Single Bed</option>
+                <option value="delux">Delux</option>
+                <option value="king">King</option>
+            </select>
+            <label for="photo">Room Photo:</label>
+            <input type="file" name="photo">
+            <label for="description">Description:</label>
+            <textarea name="description"></textarea>
+            <button type="submit">Add Room</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Add Employee</h2>
+        <form id="addEmployeeForm">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter First Name" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email Address" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter Phone Number">
+            </div>
+            <div class="form-group">
+                <label for="userPermission">Role:</label>
+                <select id="userPermission" name="userPermission" required>
+                    <option value="">Select Permission</option>
+                    <option value="hotel_manager">Hotel Manager</option>
+                    <option value="receptionist">Receptionist</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hireDate">Hire Date:</label>
+                <input type="date" id="hireDate" name="hireDate" required>
+            </div>
+            <div class="form-group">
+                <label for="employeeImage">Employee Image:</label>
+                <input type="file" id="employeeImage" name="employeeImage" accept="image/*">
+            </div>
+            <button type="submit">Add Employee</button>
+        </form>
+    </div>
+</body>
+</html>

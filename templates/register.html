@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    width: auto;
+    background-image: url( image/hotel1.jpg);
+
+}
+ div{
+    border-radius: 30px;
+ }
+
+.registration-container {
+    width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    opacity: inherit;
+    border: 1px solid #ccc;
+    border-radius: 10Spx;
+    opacity: 0.7;
+    background-color:white;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+select {
+    width: 450px;
+    padding: 10px;
+    /* background-color:moccasin; */
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+h2{
+        color: blue;
+        text-align: center;
+     }
+
+#button{
+    width: 20%;
+    background-color: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#button:hover{
+    background-color: #005c78;
+
+}
+</style>
+</head>
+<body>
+<div class="registration-container">
+         <form>
+        <h2>Register</h2>
+            <input type="text" name="name" id="Name" placeholder="Name" required><br>
+            <input type="email" name="email" id="Email" placeholder="Email" required><br>
+            <input type="tel" name="phone_number" id="Phone Number" placeholder="Phone Number" required><br>
+            <input type="date" name="date_of_birth" id="DOB" required><br>
+            <select name="gender" id="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select><br>
+            <input type="password" name="password" id="password" placeholder="Password" required><br>
+            <input type="password" name="Confirm password" id="Confirm password" placeholder="Confirm Password" required><br>
+            <button type="submit" id="button" name="register">Register</button><br><br>
+        </form>
+        <div class ="bottom-link">
+            Already a member?
+         <a href="login.html">Login</a>
+
+    </div>
+</body>
+</html>
+

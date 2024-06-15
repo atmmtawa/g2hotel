@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+     <div id="guestdetails">
+        <form>
+            <div class="head">
+                <h3>RESERVATION</h3>
+            </div>
+            <div class="middle">
+                <div class="guestinfo">
+                    <h4>Guest information</h4>
+                    <input type="text" name="Name" placeholder="Enter Full name">
+                    <input type="email" name="Email" placeholder="Enter Email">
+                    <input type="text" name="Phone" placeholder="Enter Phoneno">
+                </div>
+
+                <div class="line"></div>
+
+                <div class="reservationinfo">
+                    <h4>Reservation information</h4>
+                    <select name="RoomType" class="selectinput">
+						<option value selected >Type Of Room</option>
+                        <option value="Superior Room">KING ROOM</option>
+                        <option value="Deluxe Room">DELUXE ROOM</option>
+						<option value="Single Room">SINGLE ROOM</option>
+                    </select>
+                    <select name="Bed" class="selectinput">
+						<option value selected >Bedding Type</option>
+                        <option value="Single">SINGLE BED</option>
+                        <option value="Double">DELUX BED</option>
+                        <option value="Double">KING BED</option>
+                    </select>
+                    <select name="Meal" class="selectinput">
+						<option value selected >Meal</option>
+                        <option value="Room only">Room only</option>
+                        <option value="Breakfast">Breakfast</option>
+						            <option value="Lunch">Lunch</option>
+						            <option value="Full Board">Full Board</option>
+					</select>
+                    <div class="datesection">
+                        <span>
+                            <label for="cin"> Check-In</label>
+                            <input name="cin" type ="date">
+                        </span>
+                        <span>
+                            <label for="cin"> Check-Out</label>
+                            <input name="cout" type ="date">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <button class="btn-success" name="detailsubmit">Submit</button>
+            </div>
+        </form>
+          </div>
+</body>
+</html>

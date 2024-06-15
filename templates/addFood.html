@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Food</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Add Food</h2>
+        <form id="addFoodForm">
+            <label for="foodCategory">Food Category:</label>
+            <select id="foodCategory" name="foodCategory">
+                <option value="">Select Category</option>
+                <option value="protein">Protein</option>
+                <option value="carbohydrate">Carbohydrate</option>
+                <option value="fat">Fat</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="foodName">Food Name:</label>
+            <input type="text" id="foodName" name="foodName" placeholder="Enter Food Name" required>
+            <label for="foodPrice">Food Price:</label>
+            <input type="text" id="foodPrice" name="foodPrice" placeholder="Enter Food Price" min="0" required>
+            <label for="foodDescription">Food Description:</label>
+            <textarea id="foodDescription" name="foodDescription" placeholder="Enter Food Description (Recipes, Facts, etc.)"></textarea>
+            <br>
+            <button type="submit">Add Food</button>
+            <button type="button" onclick="viewFoodDetails()">View Food Details</button>
+            <div id="error"></div>
+        </form>
+    </div>
+    <script></script>
+</body>
+</html>
