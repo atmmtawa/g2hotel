@@ -1,0 +1,106 @@
+{% extends 'nav.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crewmates Hotel Hotel</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        .section-title {
+            margin: 2em 0;
+            text-align: center;
+        }
+        .feature-box {
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .feature-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .feature-box img {
+            border-radius: 5px;
+            width: 100%;
+            height: auto;
+        }
+        .feature-box h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .feature-box p {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="features" class="container my-5">
+        <h2 class="section-title">Our Features</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <img src="{% static 'images/LR1.jpg' %}" alt="Feature 1">
+                    <h3>Luxury Rooms</h3>
+                    <p>Experience unparalleled comfort and luxury in our rooms.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <img src="{% static 'images/GD.jpg' %}" alt="Feature 2">
+                    <h3>Gourmet Dining</h3>
+                    <p>Savor exquisite dishes crafted by our master chefs.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <img src="{% static 'images/PL.jpg' %}" alt="Feature 3">
+                    <h3>Prime Location</h3>
+                    <p>Conveniently located in the heart of the city.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rooms" class="container my-5">
+        <h2 class="section-title">Our Rooms</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <img src="{% static 'images/HR1.jpg' %}" alt="Room 1">
+                    <h3>Deluxe Room</h3>
+                    <p>Spacious and elegantly designed rooms with a city view.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <img src="{% static 'images/HR2.jpg' %}" alt="Room 2">
+                    <h3>Suite</h3>
+                    <p>Luxurious suites with separate living areas and premium amenities.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <img src="{% static 'images/HR3.jpg' %}" alt="Room 3">
+                    <h3>Presidential Suite</h3>
+                    <p>The epitome of luxury with panoramic city views.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
+
+{% endblock %}
