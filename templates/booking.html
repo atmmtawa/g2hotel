@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../statics/css/home.css">
+    <link rel="stylesheet" href="../statics/css/style.css">
 </head>
 <body>
-     <div id="guestdetails">
+     <div class="container">
         <form>
             <div class="head">
-                <h3>RESERVATION</h3>
+                <h3 style="text-align: center;color:blue;">RESERVATION</h3>
             </div>
             <div class="middle">
-                <div class="guestinfo">
-                    <h4>Guest information</h4>
-                    <input type="text" name="Name" placeholder="Enter Full name">
-                    <input type="email" name="Email" placeholder="Enter Email">
-                    <input type="text" name="Phone" placeholder="Enter Phoneno">
+                <div class="guestinfo" >
+                    <h4 style="text-align: center; color:blue;">Guest information</h4>
+                    <input type="text" name="Name" placeholder="Enter Full name"><br>
+                    <input type="email" name="Email" placeholder="Enter Email"><br>
+                    <input type="text" name="Phone" placeholder="Enter Phoneno"><br>
                 </div>
 
                 <div class="line"></div>
 
                 <div class="reservationinfo">
-                    <h4>Reservation information</h4>
+                    <h4 style="text-align: center; color:blue;">Reservation information</h4>
                     <select name="RoomType" class="selectinput">
 						<option value selected >Type Of Room</option>
                         <option value="Superior Room">KING ROOM</option>
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="footer">
-                <button class="btn-success" name="detailsubmit">Submit</button>
+                <button type="submit" class="btn-success" name="detailsubmit">Submit</button>
             </div>
         </form>
           </div>

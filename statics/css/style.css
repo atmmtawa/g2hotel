@@ -26,6 +26,7 @@
   input[type="password"],
   input[type="tel"],
   input[type="date"],
+  input[type="number"],
   select {
       width: 100%;
       padding: 10px;
@@ -58,6 +59,14 @@
       border-radius: 5px;
       cursor: pointer;
   }
+  button[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
   .login-container {
     position: relative;
     z-index: 3;
@@ -79,4 +88,7 @@
   .error {
       color: red;
       margin-bottom: 15px;
+  }
+  .guestinfo{
+    padding: 50px;
   }
