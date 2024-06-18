@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{static/css/style.css">
+    <script src="{% static'js/bookingValidation.js'%}"></script>
 </head>
 <body>
      <div class="container">
-        <form>
+        <form onsubmit="validateBookingDates()">
             <div class="head">
                 <h3 style="text-align: center;color:blue;">RESERVATION</h3>
             </div>
@@ -46,11 +47,11 @@
                     <div class="datesection">
                         <span>
                             <label for="cin"> Check-In</label>
-                            <input name="cin" type ="date">
+                            <input name="cin" type ="date" id="s_date">
                         </span>
                         <span>
                             <label for="cin"> Check-Out</label>
-                            <input name="cout" type ="date">
+                            <input name="cout" type ="date" id="e_date">
                         </span>
                     </div>
                 </div>

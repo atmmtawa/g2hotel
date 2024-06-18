@@ -5,32 +5,29 @@
     <meta charset="UTF-8">
     <title>Add New Room</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/AddRoomvalidate.js'%}"></script>
 </head>
 <body>
     <div class="container">
         <h2>Add New Room</h2>
-        <form action="#" method="POST">
+        <form  id="hotelRoomForm" method="POST" >
             {% csrf_token %}
             <label for="room-type">Room Type:</label>
-            <select name="room_type">
+            <select name="room_type" id="type">
                 <option value="king">King Room</option>
                 <option value="single">Single Room</option>
                 <option value="double">Double Room</option>
                 <option value="duplex">Duplex Room</option>
             </select>
-            <label for="room-number">Room Number:</label>
-            <input type="room_number" name="room-number">
-            <label for="room-size">Room Size (M<sup>2</sup>):</label>
-            <input type="number" name="room-size">
-            <label for="max-capacity">Max Capacity:</label>
-            <input type="number" name="max-capacity">
+            <label for="max_capacity">Max Capacity:</label>
+            <input type="number" name="max_capacity" id="capacity" >
             <label for="price">Price:</label>
-            <input type="number" name="price">
+            <input type="number" name="price" id="price">
             <label for="photo">Room Photo:</label>
-            <input type="file" name="photo">
+            <input type="file" name="photo" id="image">
             <label for="description">Description:</label>
             <textarea name="description"></textarea>
-            <button type="submit">Add Room</button>
+            <button type="submit" >Add Room</button>
         </form>
     </div>
 
