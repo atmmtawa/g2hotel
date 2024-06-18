@@ -148,16 +148,16 @@ ul li a:hover{
 }
 
 .h1{
-    background-image: url(../image/hotel1photo.webp);
+    background-image: url(../statics/images/hotel1photo.webp);
 }
 .h2{
-    background-image: url(../image/hotel2photo.jpg);
+    background-image: url(../statics/images/hotel2photo.jpg);
 }
 .h3{
-    background-image: url(../image/hotel3photo.avif);
+    background-image: url(../statics/images/hotel3photo.avif);
 }
 .h4{
-    background-image: url(../image/hotel4photo.jpg);
+    background-image: url(../statics/images/hotel4photo.jpg);
 }
 
 .roomdata{
@@ -352,4 +352,6 @@ font-size: 30px;
         padding: 0 30px;
     }
 }
+
+
 

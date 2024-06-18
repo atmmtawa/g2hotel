@@ -26,6 +26,7 @@
   input[type="password"],
   input[type="tel"],
   input[type="date"],
+  input[type="number"],
   select {
       width: 100%;
       padding: 10px;
@@ -58,6 +59,14 @@
       border-radius: 5px;
       cursor: pointer;
   }
+  button[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
   .login-container {
     position: relative;
     z-index: 3;
@@ -80,50 +89,6 @@
       color: red;
       margin-bottom: 15px;
   }
-  /* styles.css */
-
-/* Global styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-}
-
-/* Section styles */
-.section-title {
-    margin: 2em 0;
-    text-align: center;
-    font-size: 2em;
-}
-
-/* Feature box styles */
-.feature-box {
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.feature-box:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.feature-box img {
-    border-radius: 5px;
-    width: 100%;
-    height: auto;
-}
-
-.feature-box h3 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.feature-box p {
-    color: #6c757d;
-}
+  .guestinfo{
+    padding: 50px;
+  }
