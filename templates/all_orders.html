@@ -1,0 +1,84 @@
+{% extends 'side_bar.html'%}
+{% block main_b %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Orders</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>All Orders</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Guest</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                    <th>Total Price</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.guest.username }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>{{ order.is_processed|yesno:"Processed,Pending" }}</td>
+                    <td>Tshs {{ order.total_price }}</td>
+                    <td>
+                        <ul>
+                            {% for item in order.order_items.all %}
+                            <li>{{ item.quantity }} x {{ item.food_item.name }} (Tshs {{item.food_item.price }})</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'home' %}" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>
+{% endblock %}

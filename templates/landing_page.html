@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System</title>
+    <link rel="stylesheet" href="{% static 'fontawesome-free-6.5.2-web/css/all.min.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .hero {
+            background: url("{% static 'images/hotel1.jpg' %}") no-repeat center center/cover;
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin: 0;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        .hero a {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .hero a:hover {
+            background-color: #0056b3;
+        }
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+        .services, .info-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .service, .info-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 30%;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+        .service:hover, .info-card:hover {
+            transform: translateY(-10px);
+        }
+        .service i, .info-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .service h3, .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .info-card p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .info-card a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .service, .info-card {
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .hero a {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to Our Hotel</h1>
+        <p>Experience the best stay with luxury and comfort</p>
+        <a href="{% url 'room_list' %}">Book a Room</a>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+
+    <div class="section">
+        <h2>Our Services</h2>
+        <div class="services">
+            <div class="service">
+                <i class="fas fa-concierge-bell"></i>
+                <h3>24/7 Concierge</h3>
+                <p>Our concierge service is available 24/7 to assist you with all your needs and queries.</p>
+            </div>
+            <div class="service">
+                <i class="fas fa-utensils"></i>
+                <h3>Room Service</h3>
+                <p>Enjoy delicious meals and snacks delivered right to your room, any time of the day.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>About Our Hotel</h2>
+        <div class="info-cards">
+            <div class="info-card">
+                <i class="fas fa-bed"></i>
+                <h3>Our Rooms</h3>
+                <p>We offer a variety of rooms to suit your needs, from single rooms to family suites.</p>
+                <a href="{% url 'room_list' %}">View All Rooms</a>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Our Food Menu</h3>
+                <p>Explore our diverse food menu featuring delicious cuisines from around the world.</p>
+                <a href="{% url 'food_menu' %}">View Food Menu</a>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-info-circle"></i>
+                <h3>Why Choose Us?</h3>
+                <p>Learn more about our exceptional services, customer reviews, and our dedication to excellence.</p>
+                <a href="">Learn More</a> <!-- Assuming you have an 'about' page -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <p>&copy; 2023 Hotel Management System. All rights reserved.</p>
+        <p>
+            <a href="{% url 'home' %}">Home</a> |
+            <a href="{% url 'room_list' %}">Rooms</a> |
+            <a href="{% url 'food_menu' %}">Food Menu</a> |
+        </p>
+    </div>
+</body>
+</html>

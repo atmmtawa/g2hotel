@@ -1,0 +1,100 @@
+{% extends 'side_bar.html'%}
+{% block main_b %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .edit-button, .suspend-button {
+            padding: 10px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .edit-button {
+            background-color: #007bff;
+        }
+        .edit-button:hover {
+            background-color: #0056b3;
+        }
+        .suspend-button {
+            background-color: #dc3545;
+        }
+        .suspend-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>All Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.is_manager %}
+                            Manager
+                        {% elif user.is_staff %}
+                            Staff
+                        {% elif user.is_guest %}
+                            Guest
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_user' user.id %}" class="edit-button">Edit</a>
+                        {% if user.is_active %}
+                        <a href="{% url 'suspend_user' user.id %}" class="suspend-button">Suspend</a>
+                        {% else %}
+                        <a href="{% url 'resuspend_user' user.id %}" class="suspend-button" style="background-color: rgb(9, 83, 9);">Resuspend</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'home' %}" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>
+{% endblock %}

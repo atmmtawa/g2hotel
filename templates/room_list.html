@@ -22,6 +22,7 @@
             width: 300px;
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden;
+            padding: 15px;
         }
         .card img {
             width: 100%;
@@ -39,6 +40,7 @@
             color: #555;
         }
         .card button {
+            margin: 5px;
             background-color: #007bff;
             border: none;
             color: white;
@@ -66,18 +68,28 @@
 </head>
 <body>
     <div class="row">
+        {% if user.is_staff or user.is_manager %}
+        <a href="{% url 'add_room' %}" class="button-at-right"><i class="fas fa-plus icon"></i>Add room</a>
+        {% endif %}
         {% for room_status in room_statuses %}
         <div class="card col">
             <a href="{% url 'room_details' room_status.room.id %}">
                 <img src="{{ room_status.room.room_image.url }}" alt="Room Image">
                 <div class="card-content">
                     <h3>{{ room_status.room.room_number }} - {{ room_status.room.get_room_type_display }}</h3>
-                    <p>Price per Night: ${{ room_status.room.price_per_night }}</p>
-                    <p>Status: {{ room_status.is_booked|yesno:"Booked,Available" }}</p>
+                    <p>Price per Night: Tshs {{ room_status.room.price_per_night }}</p>
+                    <p style="color: {{ room_status.is_booked|yesno:'red,green' }}">Status: {{ room_status.is_booked|yesno:"Booked,Available" }}</p>
                     <p>{{ room_status.room.description }}</p>
                 </div>
             </a>
+            {% if room_status.is_booked %}
+            <button style="background-color: rgb(255, 136, 0);" onclick="window.location.href='{% url 'book_room' room_status.room.id %}'">Booked</button>
+            {% else %}
             <button onclick="window.location.href='{% url 'book_room' room_status.room.id %}'">Book Now</button>
+            {% endif %}
+            {% if user.is_staff or user.is_manager %}
+            <button style="background-color: rgb(217, 255, 0);" onclick="window.location.href='{% url 'edit_room' room_status.room.id %}'">Edit</button>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

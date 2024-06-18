@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Login</title>
+    {% load static %}
     <link rel="stylesheet" href="">
     <style>
         body {
@@ -9,7 +10,7 @@
         text-align: center;
         width: auto;
         display: flex;
-        background-image: url("{ static 'images/hotel1.jpg'}");
+        background-image: url("{% static 'images/hotel1.jpg' %}");
         background-size: cover;
         
     

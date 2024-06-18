@@ -1,11 +1,10 @@
-
 {% extends 'side_bar.html'%}
 {% block main_b %}
 {% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Room</title>
+    <title>Edit Room</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,45 +68,47 @@
 </head>
 <body>
     <div class="container">
-        <h2>Add Room</h2>
+        <h2>Edit Room Details</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="room_number">Room Number:</label>
-                <input type="text" id="room_number" name="room_number" required>
+                <input type="text" id="room_number" name="room_number" value="{{ room.room_number }}" required>
             </div>
             <div class="form-group">
                 <label for="room_type">Room Type:</label>
                 <select id="room_type" name="room_type" required>
-                    <option value="SINGLE">Single</option>
-                    <option value="DOUBLE">Double</option>
-                    <option value="SUITE">Suite</option>
-                    <option value="FAMILY">Family</option>
+                    <option value="SINGLE" {% if room.room_type == "SINGLE" %}selected{% endif %}>Single</option>
+                    <option value="DOUBLE" {% if room.room_type == "DOUBLE" %}selected{% endif %}>Double</option>
+                    <option value="SUITE" {% if room.room_type == "SUITE" %}selected{% endif %}>Suite</option>
+                    <option value="FAMILY" {% if room.room_type == "FAMILY" %}selected{% endif %}>Family</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="price_per_night">Price per Night:</label>
-                <input type="number" step="0.01" id="price_per_night" name="price_per_night" required>
+                <input type="number" step="0.01" id="price_per_night" name="price_per_night" value="{{ room.price_per_night }}" required>
             </div>
             <div class="form-group">
                 <label for="is_available">Is Available:</label>
-                <input type="checkbox" id="is_available" name="is_available">
+                <input type="checkbox" id="is_available" name="is_available" {% if room.is_available %}checked{% endif %}>
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4"></textarea>
+                <textarea id="description" name="description" rows="4">{{ room.description }}</textarea>
             </div>
             <div class="form-group">
-                <label for="image">Room Image:</label>
+                <label for="image">Image:</label>
                 <input type="file" accept=".jpg, .jpeg, .png, .PNG" id="image" name="image">
+                {% if room.room_image %}
+                <p>Current image: <a href="{{ room.room_image.url }}" target="_blank">View</a></p>
+                {% endif %}
             </div>
             <div class="form-group">
-                <button type="submit">Add Room</button>
+                <button type="submit">Save Changes</button>
             </div>
         </form>
         <a href="{% url 'room_list' %}" class="back-button">Back to Room List</a>
     </div>
 </body>
 </html>
-
 {% endblock %}

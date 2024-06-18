@@ -1,0 +1,102 @@
+{% extends 'side_bar.html'%}
+{% block main_b %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .food-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .food-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .food-item .details {
+            flex: 1;
+        }
+        .food-item .details h3 {
+            margin: 0 0 10px;
+        }
+        .food-item .details p {
+            margin: 5px 0;
+        }
+        .food-item .quantity {
+            width: 50px;
+        }
+        .order-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .order-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user.is_staff or user.is_manager %}
+        <a href="{% url 'add_food_item' %}" class="button-at-right"><i class="fas fa-plus icon"></i> Add Food Item</a>
+        {% endif %}
+        <h2>Food Menu</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for food_item in food_items %}
+            <div class="food-item">
+                <img src="{{ food_item.image.url }}" alt="Food Image">
+                <div class="details">
+                    <h3>{{ food_item.name }}</h3>
+                    <p>{{ food_item.description }}</p>
+                    <p><strong>Price:</strong> ${{ food_item.price }}</p>
+                </div>
+                <div>
+                    {% if user.is_guest %}
+                    <label for="quantity_{{ food_item.id }}">Quantity:</label>
+                    <input type="number" id="quantity_{{ food_item.id }}" name="quantities" class="quantity" min="0" required>
+                    <input type="hidden" name="food_items" value="{{ food_item.id }}">
+                    {% else %}
+                    <a class="order-button" href="{% url 'edit_food_item' food_item.id %}">Edit</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% if user.is_guest %}
+            <button type="submit" class="order-button">Place Order</button>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

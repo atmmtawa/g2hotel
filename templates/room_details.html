@@ -74,7 +74,11 @@
             <p>{{ room.description }}</p>
         </div>
         <a href="{% url 'room_list' %}" class="back-button">Back to Room List</a>
+        {% if is_booked %}
+        <a style="background-color: rgb(255, 136, 0)" href="{% url 'book_room' room.id %}" class="book-button">Booked</a>
+        {% else %}
         <a href="{% url 'book_room' room.id %}" class="book-button">Book Now</a>
+        {% endif %}
     </div>
 </body>
 </html>

@@ -1,11 +1,9 @@
-
 {% extends 'side_bar.html'%}
 {% block main_b %}
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Room</title>
+    <title>Edit Food Item</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,7 +30,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input, .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -69,45 +67,38 @@
 </head>
 <body>
     <div class="container">
-        <h2>Add Room</h2>
+        <h2>Edit Food Item</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <label for="room_number">Room Number:</label>
-                <input type="text" id="room_number" name="room_number" required>
-            </div>
-            <div class="form-group">
-                <label for="room_type">Room Type:</label>
-                <select id="room_type" name="room_type" required>
-                    <option value="SINGLE">Single</option>
-                    <option value="DOUBLE">Double</option>
-                    <option value="SUITE">Suite</option>
-                    <option value="FAMILY">Family</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="price_per_night">Price per Night:</label>
-                <input type="number" step="0.01" id="price_per_night" name="price_per_night" required>
-            </div>
-            <div class="form-group">
-                <label for="is_available">Is Available:</label>
-                <input type="checkbox" id="is_available" name="is_available">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ food_item.name }}" required>
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4"></textarea>
+                <textarea id="description" name="description" rows="4">{{ food_item.description }}</textarea>
             </div>
             <div class="form-group">
-                <label for="image">Room Image:</label>
+                <label for="price">Price:</label>
+                <input type="number" step="0.01" id="price" name="price" value="{{ food_item.price }}" required>
+            </div>
+            <div class="form-group">
+                <label for="is_available">Is Available:</label>
+                <input type="checkbox" id="is_available" name="is_available" {% if food_item.is_available %}checked{% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
                 <input type="file" accept=".jpg, .jpeg, .png, .PNG" id="image" name="image">
+                {% if food_item.image %}
+                <p>Current image: <a href="{{ food_item.image.url }}" target="_blank">View</a></p>
+                {% endif %}
             </div>
             <div class="form-group">
-                <button type="submit">Add Room</button>
+                <button type="submit">Save Changes</button>
             </div>
         </form>
-        <a href="{% url 'room_list' %}" class="back-button">Back to Room List</a>
+        <a href="{% url 'food_menu' %}" class="back-button">Back to Food Menu</a>
     </div>
 </body>
 </html>
-
 {% endblock %}
