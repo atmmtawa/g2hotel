@@ -1,5 +1,5 @@
 # views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -66,7 +66,7 @@ def book_room(request, room_id):
             number_of_guests=number_of_guests
         )
         return redirect('view_bookings')
-    return render(request, 'book_room.html', {'room': room})
+    return render(request, 'confirm_booking.html', {'room': room})
 
 @login_required
 def view_bookings(request):
@@ -99,11 +99,6 @@ def manage_bookings(request):
         return render(request, 'manage_bookings.html', {'bookings': bookings})
     return redirect('home')
 
-# views.py
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Room
-from django.contrib import messages
 
 @login_required
 def add_room(request):
@@ -130,3 +125,8 @@ def add_room(request):
         return redirect('room_list')
     
     return render(request, 'addRoom.html')
+
+
+def room_details(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    return render(request, 'room_details.html', {'room': room})

@@ -1,0 +1,71 @@
+
+{% extends 'side_bar.html'%}
+{% block main_b %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Bookings</title>
+    <style>
+       
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            width: calc(33% - 40px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .card h3 {
+            margin: 0 0 10px;
+        }
+        .card p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Your Bookings</h2>
+    <div class="container">
+        {% for booking in bookings %}
+        <div class="card">
+            <img src="{{ booking.room.room_image.url }}" alt="Room Image">
+            <div class="card-content">
+                <h3>Room {{ booking.room.room_number }} - {{ booking.room.get_room_type_display }}</h3>
+                <p>Check-in Date: {{ booking.check_in_date }}</p>
+                <p>Check-out Date: {{ booking.check_out_date }}</p>
+                <p>Number of Guests: {{ booking.number_of_guests }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}
