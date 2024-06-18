@@ -1,37 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="home.css">
-    <title>Hotel ms</title>
-    <style>
-      a{
-        text-decoration: none;
-      }
-      #HotelName{
-        font-family:'Gill Sans', 'Gill Sans MT';
-        text-align: center;
-        color: orange;
-      }
-    </style>
-</head>
 
-<body>
-  <div>
-    <h1 id="HotelName">BLUE BIRD HOTEL</h1>
-  </div>
-  <nav>
-      <li><a href="#firstsection">Home</a></li>
-      <li><a href="#secondsection">Rooms</a></li>
-      <li><a href="#thirdsection">Facilites</a></li>
-      <li><a href="#contactus">contact us</a></li>
-       <div class="logout">
-        <a href="login.html"><button class="btn btn-primary">Logout</button></a>
-        </div>
-  </nav>
-
+{% extends 'nav.html'%}
+{% load static %}
+{% block content%}
   <section id="firstsection" class="carousel slide carousel_section" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item">
@@ -123,5 +93,5 @@
       <i class="fa-solid fa-envelope"></i>
     </div>
   </section>
-</body>
-</html>
+
+  {% endblock %}

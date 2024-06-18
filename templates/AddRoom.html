@@ -9,15 +9,16 @@
     <div class="container">
         <h2>Add New Room</h2>
         <form action="#" method="POST">
+            {% csrf_token %}
             <label for="room-type">Room Type:</label>
-            <select name="room-type">
+            <select name="room_type">
                 <option value="king">King Room</option>
                 <option value="single">Single Room</option>
                 <option value="double">Double Room</option>
                 <option value="duplex">Duplex Room</option>
             </select>
             <label for="room-number">Room Number:</label>
-            <input type="number" name="room-number">
+            <input type="room_number" name="room-number">
             <label for="room-size">Room Size (M<sup>2</sup>):</label>
             <input type="number" name="room-size">
             <label for="max-capacity">Max Capacity:</label>

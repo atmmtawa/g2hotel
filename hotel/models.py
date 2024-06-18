@@ -72,6 +72,8 @@ class GuestProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=20)
     address = models.TextField(blank=True, null=True)
+    gender = models.TextField(max_length=10, null=True)
+    d_o_b = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.user.get_full_name()

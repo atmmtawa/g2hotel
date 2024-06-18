@@ -17,6 +17,8 @@ def register(request):
         password2 = request.POST['password2']
         phone_number = request.POST['phone_number']
         address = request.POST['address']
+        gender = request.POST['gender']
+        d_o_b = request.POST['d_o_b']
         
         if password1 != password2:
             messages.error(request, "Passwords do not match!")
@@ -26,7 +28,7 @@ def register(request):
         user.is_guest = True
         user.save()
         
-        GuestProfile.objects.create(user=user, phone_number=phone_number, address=address)
+        GuestProfile.objects.create(user=user, d_o_b = d_o_b, gender=gender, phone_number=phone_number, address=address)
         login(request, user)
         return redirect('home')
     return render(request, 'register.html')
@@ -96,3 +98,35 @@ def manage_bookings(request):
         bookings = Booking.objects.filter(room__hotel__managers__user=request.user)
         return render(request, 'manage_bookings.html', {'bookings': bookings})
     return redirect('home')
+
+# views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Room
+from django.contrib import messages
+
+@login_required
+def add_room(request):
+    if request.method == 'POST':
+        room_number = request.POST.get('room_number')
+        room_type = request.POST.get('room_type')
+        price_per_night = request.POST.get('price_per_night')
+        is_available = request.POST.get('is_available') == 'on'
+        description = request.POST.get('description')
+        
+        if not room_number or not room_type or not price_per_night:
+            messages.error(request, "Please fill out all required fields.")
+            return redirect('add_room')
+        
+        room = Room(
+            room_number=room_number,
+            room_type=room_type,
+            price_per_night=price_per_night,
+            is_available=is_available,
+            description=description
+        )
+        room.save()
+        messages.success(request, "Room added successfully!")
+        return redirect('room_list')
+    
+    return render(request, 'add_room.html')

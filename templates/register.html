@@ -60,24 +60,27 @@ h2{
 </head>
 <body>
 <div class="registration-container">
-         <form  name="signupForm" onsubmit="return validateForm()">
+         <form  name="signupForm" onsubmit="return validateForm()" method="post">
+            {% csrf_token %}
         <h2>Register</h2>
-            <input type="text" name="fullname" id="Name" placeholder="Full Name" required><br>
+            <input type="text" name="username" id="Name" placeholder="Your username" required><br>
             <input type="email" name="email" id="Email" placeholder="Email" required><br>
-            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Phone Number" required><br>
-            <input type="date" name="date_of_birth" id="DOB" required><br>
+            <input type="tel" name="phone_number" id="phoneNumber" placeholder="Phone Number" required><br>
+            <input type="date" name="d_o_b" id="DOB" required><br>
             <select name="gender" id="gender" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">other</option>
             </select><br>
-            <input type="password" name="password" id="password" placeholder="Password" required><br>
-            <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" required><br>
+            <input type="password" name="password1" id="password" placeholder="Password" required><br>
+            <input type="addess" name="address" id="adress" placeholder="Your address" required><br>
+            <input type="password" name="password2" id="confirmpassword" placeholder="Confirm Password" required><br>
             <button type="submit" id="button" name="register" >Register</button><br><br>
         </form>
         <div class ="bottom-link">
             Already a member?
-            <a href="{% url 'login' %}">Login</a>
+         <a href="login.html">Login</a>
+
     </div>
 </body>
 </html>
