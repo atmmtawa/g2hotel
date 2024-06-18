@@ -30,7 +30,7 @@ class Room(models.Model):
         ('FAMILY', 'Family'),
     ]
 
-    hotel = models.ForeignKey(Hotel, related_name='rooms', on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotel, related_name='rooms', on_delete=models.CASCADE, null=True)
     room_number = models.CharField(max_length=10)
     room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES)
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2)

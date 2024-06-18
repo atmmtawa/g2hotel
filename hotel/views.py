@@ -119,7 +119,7 @@ def add_room(request):
             price_per_night=price_per_night,
             is_available=is_available,
             description=description,
-            image=image
+            room_image=image
         )
         room.save()
         messages.success(request, "Room added successfully!")
