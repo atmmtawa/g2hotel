@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import CustomUser, GuestProfile, Booking, Room
+from .models import *
 from django.utils import timezone
 
 def home(request):
@@ -99,7 +99,6 @@ def manage_bookings(request):
         return render(request, 'manage_bookings.html', {'bookings': bookings})
     return redirect('home')
 
-
 @login_required
 def add_room(request):
     if request.method == 'POST':
@@ -108,6 +107,7 @@ def add_room(request):
         price_per_night = request.POST.get('price_per_night')
         is_available = request.POST.get('is_available') == 'on'
         description = request.POST.get('description')
+        image = request.FILES.get('image')
         
         if not room_number or not room_type or not price_per_night:
             messages.error(request, "Please fill out all required fields.")
@@ -118,15 +118,46 @@ def add_room(request):
             room_type=room_type,
             price_per_night=price_per_night,
             is_available=is_available,
-            description=description
+            description=description,
+            room_image=image
         )
         room.save()
         messages.success(request, "Room added successfully!")
         return redirect('room_list')
     
-    return render(request, 'addRoom.html')
+    return render(request, 'add_room.html')
+
 
 
 def room_details(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     return render(request, 'room_details.html', {'room': room})
+
+@login_required
+def add_food_item(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        is_available = request.POST.get('is_available') == 'on'
+        image = request.FILES.get('image')
+
+        if not name or not price:
+            messages.error(request, "Please fill out all required fields.")
+            return redirect('add_food_item')
+
+        food_item = FoodItem(
+            name=name,
+            description=description,
+            price=price,
+            is_available=is_available,
+            image=image
+        )
+        food_item.save()
+        messages.success(request, "Food item added successfully!")
+        return redirect('food_menu')
+    
+    return render(request, 'add_food_item.html')
+
+def food_menu(request):
+    pass
