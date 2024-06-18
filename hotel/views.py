@@ -129,4 +129,4 @@ def add_room(request):
         messages.success(request, "Room added successfully!")
         return redirect('room_list')
     
-    return render(request, 'add_room.html')
+    return render(request, 'addRoom.html')
