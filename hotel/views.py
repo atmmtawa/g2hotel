@@ -66,7 +66,7 @@ def book_room(request, room_id):
             number_of_guests=number_of_guests
         )
         return redirect('view_bookings')
-    return render(request, 'book_room.html', {'room': room})
+    return render(request, 'confirm_booking.html', {'room': room})
 
 @login_required
 def view_bookings(request):
