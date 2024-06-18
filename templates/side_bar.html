@@ -15,6 +15,9 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+        a{
+            text-decoration: none;
+        }
         .sidebar {
             width: 250px;
             background-color: #333;
@@ -102,6 +105,28 @@
                 cursor: pointer;
                 z-index: 1000;
             }
+        }  
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: left 0.3s;
+        }
+        .navbar.hide {
+            left: 60px;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content-wrapper {
+            padding-top: 60px;
         }
     </style>
 </head>
@@ -132,8 +157,13 @@
         </a>
     </div>
     <div class="main-content">
-        {% block main_b %}
-        {% endblock %}
+        <div class="navbar">
+            <h1>My Project</h1>
+        </div>
+        <div class="content-wrapper">
+            {% block main_b %}
+            {% endblock %}
+        </div>
     </div>
     <script>
         function toggleMenu() {
