@@ -58,6 +58,7 @@ def user_logout(request):
 @login_required
 def book_room(request, room_id):
     room = Room.objects.get(id=room_id)
+    last_booking = Booking.objects.filter(room=room).order_by('-check_out_date').first()
     if request.method == 'POST':
         check_in_date = request.POST['check_in_date']
         check_out_date = request.POST['check_out_date']
@@ -71,7 +72,7 @@ def book_room(request, room_id):
             number_of_guests=number_of_guests
         )
         return redirect('view_bookings')
-    return render(request, 'confirm_booking.html', {'room': room})
+    return render(request, 'confirm_booking.html', {'room': room, 'last_booking':last_booking})
 
 @login_required
 def view_bookings(request):

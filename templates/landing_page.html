@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background-color: #d6d576;
         }
         .hero {
             background: url("{% static 'images/hotel1.jpg' %}") no-repeat center center/cover;
@@ -118,14 +119,20 @@
                 padding: 10px 20px;
             }
         }
+        .row{
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 <body>
     <div class="hero">
         <h1>Welcome to Our Hotel</h1>
         <p>Experience the best stay with luxury and comfort</p>
-        <a href="{% url 'room_list' %}">Book a Room</a>
-        <a href="{% url 'login' %}">Login</a>
+        <div class="row">
+            <a style="background-color: rgba(16, 95, 16, 0.616);" href="{% url 'room_list' %}">Book a Room</a>
+            <a style="margin-left: 20px; background-color: rgb(184, 148, 33)" href="{% url 'login' %}">Login</a>
+        </div>
     </div>
 
     <div class="section">

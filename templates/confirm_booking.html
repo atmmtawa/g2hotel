@@ -52,26 +52,55 @@
             background-color: #0056b3;
         }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+            const checkInDateInput = document.getElementById("check_in_date");
+            const checkOutDateInput = document.getElementById("check_out_date");
+            const last_check_out = new Date("{{ last_booking.check_out_date|date:'Y-m-d' }}");
+            const last_check_in = new Date("{{ last_booking.check_in_date|date:'Y-m-d' }}");
+            const now = new Date();
+
+            form.addEventListener("submit", function(event) {
+                const checkInDate = new Date(checkInDateInput.value);
+                const checkOutDate = new Date(checkOutDateInput.value);
+
+                if (checkInDate >= checkOutDate) {
+                    alert("Check-in date must be before check-out date.");
+                    event.preventDefault();
+                } else if (checkInDate < now.setHours(0, 0, 0, 0)) {
+                    alert("Check-in date must be today or in the future.");
+                    event.preventDefault();
+                } else if (checkOutDate < last_check_in || checkInDate>last_check_out){
+                }
+                else {
+                    alert(`Check-in date must be after ${last_check_out.toISOString().split('T')[0]}.`);
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <center>
-    <div class="container">
-        <h2>Confirm Booking for Room {{ room.room_number }}</h2>
-        <img src="{{ room.room_image.url }}" alt="Room Image">
-        <form method="post">
-            {% csrf_token %}
-            <label for="check_in_date">Check-in Date:</label>
-            <input type="date" id="check_in_date" name="check_in_date" required>
-            
-            <label for="check_out_date">Check-out Date:</label>
-            <input type="date" id="check_out_date" name="check_out_date" required>
-            
-            <label for="number_of_guests">Number of Guests:</label>
-            <input type="number" id="number_of_guests" name="number_of_guests" required>
-            
-            <button type="submit">Confirm Booking</button>
-        </form>
-    </div>
+        <div class="container">
+            <h2>Confirm Booking for Room {{ room.room_number }}</h2>
+            <img src="{{ room.room_image.url }}" alt="Room Image">
+            <form method="post">
+                {% csrf_token %}
+                <h4 style="color: red;">This Room is Booked from {{ last_booking.check_in_date }} to {{ last_booking.check_out_date }}</h4>
+                <label for="check_in_date">Check-in Date:</label>
+                <input type="date" id="check_in_date" name="check_in_date" required>
+                
+                <label for="check_out_date">Check-out Date:</label>
+                <input type="date" id="check_out_date" name="check_out_date" required>
+                
+                <label for="number_of_guests">Number of Guests:</label>
+                <input type="number" id="number_of_guests" name="number_of_guests" required>
+                
+                <button type="submit">Confirm Booking</button>
+            </form>
+        </div>
 </center>
 </body>
 </html>
