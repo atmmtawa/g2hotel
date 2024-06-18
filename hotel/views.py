@@ -99,7 +99,6 @@ def manage_bookings(request):
         return render(request, 'manage_bookings.html', {'bookings': bookings})
     return redirect('home')
 
-
 @login_required
 def add_room(request):
     if request.method == 'POST':
@@ -108,6 +107,7 @@ def add_room(request):
         price_per_night = request.POST.get('price_per_night')
         is_available = request.POST.get('is_available') == 'on'
         description = request.POST.get('description')
+        image = request.FILES.get('image')
         
         if not room_number or not room_type or not price_per_night:
             messages.error(request, "Please fill out all required fields.")
@@ -118,13 +118,15 @@ def add_room(request):
             room_type=room_type,
             price_per_night=price_per_night,
             is_available=is_available,
-            description=description
+            description=description,
+            image=image
         )
         room.save()
         messages.success(request, "Room added successfully!")
         return redirect('room_list')
     
-    return render(request, 'addRoom.html')
+    return render(request, 'add_room.html')
+
 
 
 def room_details(request, room_id):
