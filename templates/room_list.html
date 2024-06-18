@@ -5,6 +5,15 @@
 <head>
     <title>Room List</title>
     <style>
+        .row{
+            display: flex;
+            flex-direction: row;
+            text-wrap: wrap;
+        }
+        .col{
+            display: flex;
+            flex-direction: column;
+        }
         .card {
             background-color: white;
             border-radius: 10px;
@@ -56,20 +65,22 @@
     </style>
 </head>
 <body>
-    {% for room_status in room_statuses %}
-    <div class="card">
-        <a href="{% url 'room_details' room_status.room.id %}">
-            <img src="{{ room_status.room.room_image.url }}" alt="Room Image">
-            <div class="card-content">
-                <h3>{{ room_status.room.room_number }} - {{ room_status.room.get_room_type_display }}</h3>
-                <p>Price per Night: ${{ room_status.room.price_per_night }}</p>
-                <p>Status: {{ room_status.is_booked|yesno:"Booked,Available" }}</p>
-                <p>{{ room_status.room.description }}</p>
-            </div>
-        </a>
-        <button onclick="window.location.href='{% url 'book_room' room_status.room.id %}'">Book Now</button>
+    <div class="row">
+        {% for room_status in room_statuses %}
+        <div class="card col">
+            <a href="{% url 'room_details' room_status.room.id %}">
+                <img src="{{ room_status.room.room_image.url }}" alt="Room Image">
+                <div class="card-content">
+                    <h3>{{ room_status.room.room_number }} - {{ room_status.room.get_room_type_display }}</h3>
+                    <p>Price per Night: ${{ room_status.room.price_per_night }}</p>
+                    <p>Status: {{ room_status.is_booked|yesno:"Booked,Available" }}</p>
+                    <p>{{ room_status.room.description }}</p>
+                </div>
+            </a>
+            <button onclick="window.location.href='{% url 'book_room' room_status.room.id %}'">Book Now</button>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </body>
 </html>
 {% endblock %}
