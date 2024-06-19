@@ -174,40 +174,43 @@ def add_food_item(request):
 @login_required
 def food_menu(request):
     food_items = FoodItem.objects.filter(is_available=True)
+    
     if request.method == 'POST':
-        food_item_ids = request.POST.getlist('food_items')
-        quantities = request.POST.getlist('quantities')
+        food_item_id = request.POST.get('food_item_id')
+        quantity = request.POST.get('quantity')
+
+        if not food_item_id or not quantity:
+            messages.error(request, "Please select a valid quantity.")
+            return redirect('food_menu')
         
-        if not food_item_ids or not quantities:
-            messages.error(request, "Please select at least one food item.")
+        food_item = get_object_or_404(FoodItem, id=food_item_id)
+        quantity = int(quantity)
+
+        if quantity <= 0:
+            messages.error(request, "Quantity must be greater than zero.")
             return redirect('food_menu')
         
         order = Order.objects.create(
             guest=request.user,
-            total_price=0,
-            is_processed=False
+            is_processed=False,
+            total_price=0
         )
-
-        total_price = 0
-        for food_item_id, quantity in zip(food_item_ids, quantities):
-            if int(quantity) > 0:
-                food_item = FoodItem.objects.get(id=food_item_id)
-                quantity = int(quantity)
-                order_item = OrderItem.objects.create(
-                    order=order,
-                    food_item=food_item,
-                    quantity=quantity
-                )
-                total_price += food_item.price * quantity
-
-        order.total_price = total_price
         order.save()
         
+        order_item = OrderItem.objects.create(
+            order=order,
+            food_item=food_item,
+            quantity = quantity
+        )
+        order_item.save()
+
+        order.total_price += food_item.price * quantity
+        order.save()
+
         messages.success(request, "Order placed successfully!")
         return redirect('view_orders')
-    
-    return render(request, 'food_menu.html', {'food_items': food_items})
 
+    return render(request, 'food_menu.html', {'food_items': food_items})
 
 @login_required
 def view_orders(request):
@@ -382,5 +385,95 @@ def resuspend_user(request, user_id):
     messages.success(request, "User has been Activated.")
     return redirect('all_users')
 
-def edit_user(request):
-    pass
+
+@login_required
+def delete_room(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    if request.method == "POST":
+        room.delete()
+        messages.success(request, "Room deleted successfully!")
+        return redirect('room_list')
+    return render(request, 'delete_confirmation.html', {'item': room, 'type': 'Room'})
+
+@login_required
+def delete_food_item(request, food_item_id):
+    food_item = get_object_or_404(FoodItem, id=food_item_id)
+    if request.method == "POST":
+        food_item.delete()
+        messages.success(request, "Food item deleted successfully!")
+        return redirect('food_menu')
+    return render(request, 'delete_confirmation.html', {'item': food_item, 'type': 'Food Item'})
+
+@login_required
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, guest=request.user)
+    if order.is_processed:
+        messages.error(request, "You cannot cancel a processed order.")
+        return redirect('view_orders')
+    else:
+        order.delete()
+        messages.success(request, "Order canceled successfully!")
+        return redirect('view_orders')
+    return render(request, 'delete_confirmation.html', {'item': order, 'type': 'Order'})
+
+@login_required
+def view_user_details(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'view_user_details.html', {'usernow': user})
+
+
+@login_required
+def edit_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        is_manager = request.POST.get('is_manager') == 'True'
+        is_staff = request.POST.get('is_staff') == 'True'
+        is_guest = request.POST.get('is_guest') == 'True'
+        is_active = request.POST.get('is_active') == 'True'
+
+        if not username or not email:
+            messages.error(request, "Please fill out all required fields.")
+            return redirect('edit_user', user_id=user_id)
+
+        user.username = username
+        user.email = email
+        user.is_manager = is_manager
+        user.is_staff = is_staff
+        user.is_guest = is_guest
+        user.is_active = is_active
+        user.save()
+
+        messages.success(request, "User details updated successfully!")
+        return redirect('view_user_details', user_id=user.id)
+
+    return render(request, 'edit_user.html', {'nowuser': user})
+
+@login_required
+def order_details(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    order_items = order.order_items.all()
+    return render(request, 'order_details.html', {'order': order, 'order_items': order_items})
+
+@login_required
+def all_bookings(request):
+    if not(request.user.is_manager or request.user.is_staff):
+        messages.error(request, "You do not have permission to view bookings.")
+        return redirect('home')
+    
+    bookings = Booking.objects.all()  # Retrieve all bookings or apply filtering as needed
+    
+    return render(request, 'all_bookings.html', {'bookings': bookings})
+
+@login_required
+def room_booking_details(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    return render(request, 'room_booking_details.html', {'booking': booking})
+
+def confirm_booking(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    booking.is_confirmed=True
+    booking.save()
+    return redirect("all_bookings")

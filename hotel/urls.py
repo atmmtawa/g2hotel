@@ -7,7 +7,8 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('book_room/<int:room_id>/', views.book_room, name='book_room'),
-    path('view_bookings/', views.view_bookings, name='view_bookings'),
+    path('view_bookings/', views.view_bookings, name='view_bookings'),    
+    path('all_bookings/', views.all_bookings, name='all_bookings'),
     path('manage_bookings/', views.manage_bookings, name='manage_bookings'),
     path('rooms/add/', views.add_room, name='add_room'),
     path('room_list/', views.room_list, name='room_list'),
@@ -27,6 +28,12 @@ urlpatterns = [
     path('all_users/', views.all_users, name='all_users'),  # Added URL pattern for viewing all users
     path('suspend_user/<int:user_id>/', views.suspend_user, name='suspend_user'),  
     path('resuspend_user/<int:user_id>/', views.resuspend_user, name='resuspend_user'),  
-    path('edit_user/<int:id>/', views.edit_user, name='edit_user'),
-
+    path('delete_food_item/<int:food_item_id>/', views.delete_food_item, name='delete_food_item'),
+    path('delete_room/<int:room_id>/', views.delete_room, name='delete_room'),
+    path('cancel_order/<int:order_id>/', views.cancel_order, name='cancel_order'),
+    path('view_user_details/<int:user_id>/', views.view_user_details, name='view_user_details'),  # View user details
+    path('edit_user/<int:user_id>/', views.edit_user, name='edit_user'), 
+    path('order_details/<int:order_id>/', views.order_details, name='order_details'), 
+    path('room_booking_details/<int:booking_id>/', views.room_booking_details, name='room_booking_details'),# Edit user details
+    path('confirm_booking/<int:booking_id>/', views.confirm_booking, name='confirm_booking'),
 ]

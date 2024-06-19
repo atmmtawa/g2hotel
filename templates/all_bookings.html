@@ -1,12 +1,15 @@
 {% extends 'side_bar.html'%}
 {% block main_b %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>All Orders</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bookings</title>
     <style>
+
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -20,13 +23,13 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
         table, th, td {
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 15px;
+            padding: 10px;
             text-align: left;
         }
         th {
@@ -46,33 +49,27 @@
 </head>
 <body>
     <div class="container">
-        <h2>All Orders</h2>
+        <h2>View Bookings</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Order ID</th>
+                    <th>Booking ID</th>
+                    <th>Room</th>
                     <th>Guest</th>
-                    <th>Order Date</th>
+                    <th>Check-in Date</th>
+                    <th>Check-out Date</th>
                     <th>Status</th>
-                    <th>Total Price</th>
-                    <th>Details</th>
                 </tr>
             </thead>
             <tbody>
-                {% for order in orders %}
+                {% for booking in bookings %}
                 <tr>
-                    <td><a href="{% url 'order_details' order.id %}">Order No: {{ order.id }}</a></td>
-                    <td><a href="{% url 'view_user_details' order.guest.id %}">{{ order.guest.username }}</a></td>
-                    <td>{{ order.order_date }}</td>
-                    <td>{{ order.is_processed|yesno:"Processed,Pending" }}</td>
-                    <td>Tshs {{ order.total_price }}</td>
-                    <td>
-                        <ul>
-                            {% for item in order.order_items.all %}
-                            <li>{{ item.quantity }} x {{ item.food_item.name }} (Tshs {{item.food_item.price }})</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
+                    <td><a href="{% url 'room_booking_details' booking.id %}">Booking ID: {{ booking.id }}</a></td>
+                    <td>{{ booking.room }}</td>
+                    <td>{{ booking.guest }}</td>
+                    <td>{{ booking.check_in_date }}</td>
+                    <td>{{ booking.check_out_date }}</td>
+                    <td>{% if booking.is_confirmed %} <i style="color: green;"> Confirmed</i>{% else %} <a style="color: red;" href="{% url 'confirm_booking' booking.id%}"> Pending</a>{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>

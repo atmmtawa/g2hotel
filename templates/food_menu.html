@@ -1,4 +1,4 @@
-{% extends 'side_bar.html'%}
+{% extends 'side_bar.html' %}
 {% block main_b %}
 {% load static %}
 <!DOCTYPE html>
@@ -63,39 +63,56 @@
         .order-button:hover {
             background-color: #218838;
         }
+        .button-at-right {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-at-right:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    {% if user.is_staff or user.is_manager %}
+    <a href="{% url 'add_food_item' %}" class="button-at-right"><i class="fas fa-plus icon"></i> Add Food Item</a>
+    {% endif %}
     <div class="container">
-        {% if user.is_staff or user.is_manager %}
-        <a href="{% url 'add_food_item' %}" class="button-at-right"><i class="fas fa-plus icon"></i> Add Food Item</a>
-        {% endif %}
         <h2>Food Menu</h2>
-        <form method="post">
-            {% csrf_token %}
-            {% for food_item in food_items %}
-            <div class="food-item">
-                <img src="{{ food_item.image.url }}" alt="Food Image">
-                <div class="details">
-                    <h3>{{ food_item.name }}</h3>
-                    <p>{{ food_item.description }}</p>
-                    <p><strong>Price:</strong> ${{ food_item.price }}</p>
-                </div>
-                <div>
-                    {% if user.is_guest %}
-                    <label for="quantity_{{ food_item.id }}">Quantity:</label>
-                    <input type="number" id="quantity_{{ food_item.id }}" name="quantities" class="quantity" min="0" required>
-                    <input type="hidden" name="food_items" value="{{ food_item.id }}">
-                    {% else %}
-                    <a class="order-button" href="{% url 'edit_food_item' food_item.id %}">Edit</a>
-                    {% endif %}
-                </div>
+        {% for food_item in food_items %}
+        <div class="food-item">
+            <img src="{{ food_item.image.url }}" alt="Food Image">
+            <div class="details">
+                <h3>{{ food_item.name }}</h3>
+                <p>{{ food_item.description }}</p>
+                <p><strong>Price:</strong> ${{ food_item.price }}</p>
             </div>
-            {% endfor %}
-            {% if user.is_guest %}
-            <button type="submit" class="order-button">Place Order</button>
-            {% endif %}
-        </form>
+            <div>
+                {% if user.is_guest %}
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="quantity_{{ food_item.id }}">Quantity:</label>
+                    <input type="number" id="quantity_{{ food_item.id }}" name="quantity" class="quantity" min="1" required>
+                    <input type="hidden" name="food_item_id" value="{{ food_item.id }}">
+                    <button type="submit" class="order-button">Order</button>
+                </form>
+                {% else %}
+                <a class="order-button" style="margin-bottom: 5px;" href="{% url 'edit_food_item' food_item.id %}">Edit</a>
+                <form method="post" action="{% url 'delete_food_item' food_item.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="order-button" style="background-color: red;">Delete</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>

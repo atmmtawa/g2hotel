@@ -12,6 +12,19 @@
             padding: 0;
             background-color: #f5f5f5;
         }
+        .button{
+            margin: 5px;
+            background-color: #ffbb00;
+            border: none;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: block;
+            border-radius: 0 0 10px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+        }
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -65,6 +78,10 @@
                 {% endfor %}
             </div>
             <p class="total">Total: ${{ order.total_price }}</p>
+            {% if order.is_processed %}
+            {% else %}
+            <a class="button" href="{% url 'cancel_order' order.id %}">Suspend</a>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

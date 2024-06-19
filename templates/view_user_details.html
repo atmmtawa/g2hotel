@@ -1,0 +1,79 @@
+{% extends 'side_bar.html'%}
+{% block main_b %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View User Details</title>
+    <style>
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .user-details {
+            margin-bottom: 20px;
+        }
+        .user-details p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .buttons a, .buttons form {
+            display: inline-block;
+        }
+        .buttons button, .buttons a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            color: white;
+        }
+        .edit-button {
+            background-color: #007bff;
+        }
+        .edit-button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            background-color: #6c757d;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Details</h2>
+        <div class="user-details">
+            <p><strong>Username:</strong> {{ usernow.username }}</p>
+            <p><strong>Email:</strong> {{ usernow.email }}</p>
+            <p><strong>Role:</strong> 
+                {% if usernow.is_manager %}Manager{% elif usernow.is_staff %}Staff{% elif usernow.is_guest %}Guest{% endif %}
+            </p>
+            <p><strong>Status:</strong> {% if usernow.is_active %}Active{% else %}Inactive{% endif %}</p>
+        </div>
+        <div class="buttons">
+            <a href="{% url 'edit_user' usernow.id %}" class="edit-button">Edit</a>
+            <a href="{% url 'all_users' %}" class="back-button">Back to User List</a>
+        </div>
+    </div>
+</body>
+</html>
+{%  endblock %}

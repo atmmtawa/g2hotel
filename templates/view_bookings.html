@@ -55,15 +55,25 @@
     <h2>Your Bookings</h2>
     <div class="container">
         {% for booking in bookings %}
-        <div class="card">
-            <img src="{{ booking.room.room_image.url }}" alt="Room Image">
-            <div class="card-content">
-                <h3>Room {{ booking.room.room_number }} - {{ booking.room.get_room_type_display }}</h3>
-                <p>Check-in Date: {{ booking.check_in_date }}</p>
-                <p>Check-out Date: {{ booking.check_out_date }}</p>
-                <p>Number of Guests: {{ booking.number_of_guests }}</p>
+            <div class="card">
+                <a href="{% url 'room_booking_details' booking.id %}">
+                <img src="{{ booking.room.room_image.url }}" alt="Room Image">
+                <div class="card-content">
+                    <h3>Room {{ booking.room.room_number }} - {{ booking.room.get_room_type_display }}</h3>
+                    <p>Check-in Date: {{ booking.check_in_date }}</p>
+                    <p>Check-out Date: {{ booking.check_out_date }}</p>
+                    <p>Number of Guests: {{ booking.number_of_guests }}</p>
+                    <p>
+                        Status 
+                        {% if booking.is_confirmed %} 
+                        <i style="color: green;"> Confirmed</i>
+                        {% else %} 
+                        <i style="color: red;"> Pending</i>
+                        {% endif %}
+                    </p>
+                </div>
+            </a>
             </div>
-        </div>
         {% endfor %}
     </div>
 </body>

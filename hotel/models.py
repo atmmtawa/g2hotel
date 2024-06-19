@@ -48,6 +48,7 @@ class Booking(models.Model):
     check_out_date = models.DateField()
     number_of_guests = models.PositiveIntegerField()
     booking_date = models.DateTimeField(auto_now_add=True)
+    is_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Booking for {self.guest} in {self.room}"

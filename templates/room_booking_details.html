@@ -1,0 +1,59 @@
+{% extends 'side_bar.html'%}
+{% block main_b %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking Details</title>
+    <style>
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .booking-info {
+            margin-bottom: 20px;
+        }
+        .booking-info p {
+            margin: 5px 0;
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Room Booking Details</h2>
+        <div class="booking-info">
+            <h3>Booking Information</h3>
+            <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+            <p><strong>Room:</strong> {{ booking.room }}</p>
+            <p><strong>Guest:</strong> {{ booking.guest }}</p>
+            <p><strong>Check-in Date:</strong> {{ booking.check_in_date }}</p>
+            <p><strong>Check-out Date:</strong> {{ booking.check_out_date }}</p>
+            <p><strong>Is Confirmed:</strong> {% if booking.is_confirmed %}Yes{% else %}No{% endif %}</p>
+            <!-- Add more details as needed -->
+        </div>
+        <a href="{% url 'home' %}" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>
+{% endblock %}

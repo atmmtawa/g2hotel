@@ -35,6 +35,9 @@
     </style>
 </head>
 <body>
+    {% if user.is_staff or user.is_manager %}
+    <a href="{% url 'add_staff' %}" class="button-at-right"><i class="fas fa-plus icon"></i>Add Staff</a>
+    {% endif %}
     <div class="container">
         <h2>Staff List</h2>
         {% for staff in staff_members %}

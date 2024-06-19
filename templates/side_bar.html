@@ -153,10 +153,6 @@
             <i class="fas fa-home icon"></i>
             <span class="title">Home</span>
         </a>
-        <a href="{% url 'food_menu' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Food Menu Item</span>
-        </a>
         <a href="{% url 'room_list' %}">
             <i class="fas fa-bed icon"></i>
             <span class="title">Rooms</span>
@@ -171,20 +167,26 @@
             <span class="title">My orders</span>
         </a>
         {% endif %}
-        {% if user.is_staff or user.is_manager%}
+        {% if user.is_staff %}
         <a href="{% url 'view_pending_orders' %}">
             <i class="fas fa-book icon"></i>
             <span class="title">Pending orders</span>
         </a>
         {% endif %}
+        {% if user.is_staff or user.is_manager %}
+        <a href="{% url 'all_bookings' %}">
+            <i class="fas fa-book icon"></i>
+            <span class="title">Bookings</span>
+        </a>
+        {% endif %}
+        <a href="{% url 'food_menu' %}">
+            <i class="fas fa-book icon"></i>
+            <span class="title">Food Menu Item</span>
+        </a>
         {% if user.is_manager %}
         <a href="{% url 'staff_list' %}">
             <i class="fas fa-book icon"></i>
             <span class="title">Staff List</span>
-        </a>
-        <a href="{% url 'add_staff' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Add Staff</span>
         </a>
         <a href="{% url 'all_orders' %}">
             <i class="fas fa-book icon"></i>

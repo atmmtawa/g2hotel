@@ -1,0 +1,99 @@
+{% extends 'side_bar.html'%}
+{% block main_b %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .order-info, .order-items {
+            margin-bottom: 20px;
+        }
+        .order-info p, .order-items p {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Details</h2>
+        <div class="order-info">
+            <h3>Order Information</h3>
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+            <p><strong>Guest:</strong> {{ order.guest.username }}</p>
+            <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+            <p><strong>Status:</strong> {% if order.is_processed %}Processed{% else %}Pending{% endif %}</p>
+            <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+        </div>
+        <div class="order-items">
+            <h3>Order Items</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Food Item</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                    <tr>
+                        <td>{{ item.food_item.name }}</td>
+                        <td>{{ item.food_item.description }}</td>
+                        <td>${{ item.food_item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.quantity|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if user.is_guest %}
+        <a href="{% url 'view_orders' %}" class="back-button">Back to Orders</a>
+        {% else %}
+        <a href="{% url 'all_orders' %}" class="back-button">Back to Orders</a>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}
