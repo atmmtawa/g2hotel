@@ -57,6 +57,7 @@
             const form = document.querySelector("form");
             const checkInDateInput = document.getElementById("check_in_date");
             const checkOutDateInput = document.getElementById("check_out_date");
+            const guestNumber = document.getElementById("number_of_guests").value;
             const last_check_out = new Date("{{ last_booking.check_out_date|date:'Y-m-d' }}");
             const last_check_in = new Date("{{ last_booking.check_in_date|date:'Y-m-d' }}");
             const now = new Date();
@@ -77,6 +78,11 @@
                     alert(`Check-in date must be after ${last_check_out.toISOString().split('T')[0]}.`);
                     event.preventDefault();
                 }
+                var numberPattern = /^[1-4]{1}$/;
+                if (!numberPattern.test(guestNumber)) {
+                alert("Please enter a valid number of Guests");
+                return false;
+    }
             });
         });
     </script>
@@ -96,7 +102,7 @@
                 <input type="date" id="check_out_date" name="check_out_date" required>
                 
                 <label for="number_of_guests">Number of Guests:</label>
-                <input type="number" id="number_of_guests" name="number_of_guests" required>
+                <input type="text" id="number_of_guests" name="number_of_guests" required>
                 
                 <button type="submit">Confirm Booking</button>
             </form>

@@ -1,5 +1,6 @@
 {% extends 'side_bar.html'%}
 {% block main_b %}
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,11 +62,12 @@
             text-decoration: underline;
         }
     </style>
+    <script src="{% static 'js/validate_staff.js' %}"></script>
 </head>
 <body>
     <div class="container">
         <h2>Add Staff User</h2>
-        <form method="post">
+        <form method="post" onsubmit="return validateForm()">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username:</label>

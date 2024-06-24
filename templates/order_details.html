@@ -61,7 +61,7 @@
             <p><strong>Guest:</strong> {{ order.guest.username }}</p>
             <p><strong>Order Date:</strong> {{ order.order_date }}</p>
             <p><strong>Status:</strong> {% if order.is_processed %}Processed{% else %}Pending{% endif %}</p>
-            <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+            <p><strong>Total Price:</strong> Tsh.{{ order.total_price }}</p>
         </div>
         <div class="order-items">
             <h3>Order Items</h3>
@@ -80,9 +80,9 @@
                     <tr>
                         <td>{{ item.food_item.name }}</td>
                         <td>{{ item.food_item.description }}</td>
-                        <td>${{ item.food_item.price }}</td>
+                        <td>Tsh.{{ item.food_item.price }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>${{ item.quantity|floatformat:2 }}</td>
+                        <td>Tsh.{{ item.quantity|floatformat:2 }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

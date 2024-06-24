@@ -46,6 +46,8 @@
         }
         .food-item .quantity {
             width: 50px;
+            padding: 5px;
+            border-radius: 3px;
         }
         .order-button {
             display: block;
@@ -92,15 +94,15 @@
             <div class="details">
                 <h3>{{ food_item.name }}</h3>
                 <p>{{ food_item.description }}</p>
-                <p><strong>Price:</strong> ${{ food_item.price }}</p>
+                <p><strong>Price:</strong> Tsh.{{ food_item.price }}</p>
             </div>
             <div>
                 {% if user.is_guest %}
                 <form method="post">
                     {% csrf_token %}
                     <label for="quantity_{{ food_item.id }}">Quantity:</label>
-                    <input type="number" id="quantity_{{ food_item.id }}" name="quantity" class="quantity" min="1" required>
-                    <input type="hidden" name="food_item_id" value="{{ food_item.id }}">
+                    <input type="number" id="quantity_{{ food_item.id }}" name="quantity" class="quantity" min="1" required><br>
+                    <input type="hidden" name="food_item_id" value="{{ food_item.id }}"><br>
                     <button type="submit" class="order-button">Order</button>
                 </form>
                 {% else %}
