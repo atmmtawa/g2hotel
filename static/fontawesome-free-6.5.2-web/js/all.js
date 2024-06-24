@@ -16,7 +16,7 @@
 
   var _ref = _WINDOW.navigator || {},
       _ref$userAgent = _ref.userAgent,
-      userAgent = _ref$userAgent === void 0 ? '' : _ref$userAgent;
+      userAgent = _ref$userAgent === void 0 ? '' : _refTsh.userAgent;
   var WINDOW = _WINDOW;
   var DOCUMENT = _DOCUMENT;
   var IS_BROWSER = !!WINDOW.document;

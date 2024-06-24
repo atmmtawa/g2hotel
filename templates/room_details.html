@@ -64,7 +64,7 @@
         <img src="{{ room.room_image.url }}" alt="Room Image" class="room-image">
         <div class="room-details">
             <h2>Room {{ room.room_number }} - {{ room.get_room_type_display }}</h2>
-            <p><strong>Price per Night:</strong> ${{ room.price_per_night }}</p>
+            <p><strong>Price per Night:</strong> Tsh.{{ room.price_per_night }}</p>
             <p><strong>Status:</strong> {{ room.is_available|yesno:"Available,Booked" }}</p>
             <p>{{ room.description }}</p>
         </div>

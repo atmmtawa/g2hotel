@@ -71,11 +71,11 @@
                 {% for item in order.order_items.all %}
                 <div class="order-item">
                     <p>{{ item.quantity }} x {{ item.food_item.name }}</p>
-                    <p>Tshs {{ item.food_item.price }}</p>
+                    <p>Tsh.{{ item.food_item.price }}</p>
                 </div>
                 {% endfor %}
             </div>
-            <p class="total">Total: Tshs {{ order.total_price }}</p>
+            <p class="total">Total: Tsh.{{ order.total_price }}</p>
             <a href="{% url 'confirm_order' order.id %}" class="confirm-button">Confirm Order</a>
         </div>
         {% endfor %}

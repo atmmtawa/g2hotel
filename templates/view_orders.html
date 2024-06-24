@@ -68,7 +68,7 @@
                 {% for item in order.order_items.all %}
                 <div class="order-item">
                     <p>{{ item.quantity }} x {{ item.food_item.name }}</p>
-                    <p>${{ item.food_item.price }}</p>
+                    <p>Tsh.{{ item.food_item.price }}</p>
                 </div>
                 {% endfor %}
             </div>
