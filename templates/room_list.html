@@ -5,15 +5,6 @@
 <head>
     <title>Room List</title>
     <style>
-        .row{
-            display: flex;
-            flex-direction: row;
-            text-wrap: wrap;
-        }
-        .col{
-            display: flex;
-            flex-direction: column;
-        }
         .card {
             background-color: white;
             border-radius: 10px;
@@ -70,9 +61,9 @@
     {% if user.is_staff or user.is_manager %}
     <a href="{% url 'add_room' %}" class="button-at-right"><i class="fas fa-plus icon"></i>Add room</a>
     {% endif %}
-    <div class="row">
+    <div class="row" style="flex-wrap: wrap;">
         {% for room_status in room_statuses %}
-        <div class="card col">
+        <div class="card col" style="min-width: 300px;">
             <a href="{% url 'room_details' room_status.room.id %}">
                 <img src="{{ room_status.room.room_image.url }}" alt="Room Image">
                 <div class="card-content">

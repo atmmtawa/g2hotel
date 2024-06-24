@@ -7,13 +7,7 @@
     <title>Hotel Management System</title>
     <link rel="stylesheet" href="{% static 'fontawesome-free-6.5.2-web/css/all.min.css' %}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #d6d576;
-        }
+
         .hero {
             background: url("{% static 'images/hotel1.jpg' %}") no-repeat center center/cover;
             height: 100vh;
@@ -124,6 +118,12 @@
             flex-direction: row;
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', currentTheme === 'dark');
+        });
+    </script>
 </head>
 <body>
     <div class="hero">
@@ -170,14 +170,14 @@
                 <i class="fas fa-info-circle"></i>
                 <h3>Why Choose Us?</h3>
                 <p>Learn more about our exceptional services, customer reviews, and our dedication to excellence.</p>
-                <a href="">Learn More</a> <!-- Assuming you have an 'about' page -->
+                <a href="">Learn More</a>
             </div>
         </div>
     </div>
 
 
     <div class="footer">
-        <p>&copy; 2023 Hotel Management System. All rights reserved.</p>
+        <p>&copy; 2024 Hotel Management System. All rights reserved.</p>
         <p>
             <a href="{% url 'home' %}">Home</a> |
             <a href="{% url 'room_list' %}">Rooms</a> |

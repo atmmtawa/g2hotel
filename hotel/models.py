@@ -37,6 +37,7 @@ class Room(models.Model):
     is_available = models.BooleanField(default=True)
     description = models.TextField(blank=True, null=True)
     room_image = models.FileField(upload_to="rooms/", null=True)
+    max_number = models.IntegerField(default=4)
 
     def __str__(self):
         return f"{self.room_number} - {self.get_room_type_display()}"

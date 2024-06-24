@@ -1,4 +1,5 @@
 # views.py
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,21 @@ def landing_page(request):
 
 @login_required
 def home(request):
-    return render(request, "home.html")
+    rooms_count = Room.objects.count()
+    bookings_count = Booking.objects.count()
+    food_items_count = FoodItem.objects.count()
+    orders_count = Order.objects.count()
+    users_count = CustomUser.objects.count()
+    
+    context = {
+        'rooms_count': rooms_count,
+        'bookings_count': bookings_count,
+        'food_items_count': food_items_count,
+        'orders_count': orders_count,
+        'users_count': users_count,
+    }
+    
+    return render(request, 'home.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -28,7 +43,11 @@ def register(request):
         if password1 != password2:
             messages.error(request, "Passwords do not match!")
             return redirect('register')
-        
+        if CustomUser.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken")
+        if CustomUser.objects.filter(email=email).exists():
+            messages.error(request, "Username in use")
+            return redirect('register')
         user = CustomUser.objects.create_user(username=username, email=email, password=password1)
         user.is_guest = True
         user.save()
@@ -39,6 +58,8 @@ def register(request):
     return render(request, 'register.html')
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect("home")
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -115,20 +136,25 @@ def add_room(request):
         is_available = request.POST.get('is_available') == 'on'
         description = request.POST.get('description')
         image = request.FILES.get('image')
+        max_number = request.POST.get('max_number')
         
         if not room_number or not room_type or not price_per_night:
             messages.error(request, "Please fill out all required fields.")
             return redirect('add_room')
-        
-        room = Room(
-            room_number=room_number,
-            room_type=room_type,
-            price_per_night=price_per_night,
-            is_available=is_available,
-            description=description,
-            room_image=image
-        )
-        room.save()
+        try:
+            room = Room(
+                room_number=room_number,
+                room_type=room_type,
+                price_per_night=price_per_night,
+                is_available=is_available,
+                description=description,
+                room_image=image,
+                max_number = max_number
+            )
+            room.save()
+        except IntegrityError:
+            messages.info(request, 'The room number already exist!!!!')
+            return redirect("add_room")
         messages.success(request, "Room added successfully!")
         return redirect('room_list')
     
@@ -157,7 +183,7 @@ def add_food_item(request):
         if not name or not price:
             messages.error(request, "Please fill out all required fields.")
             return redirect('add_food_item')
-
+    
         food_item = FoodItem(
             name=name,
             description=description,
@@ -176,41 +202,48 @@ def food_menu(request):
     food_items = FoodItem.objects.filter(is_available=True)
     
     if request.method == 'POST':
-        food_item_id = request.POST.get('food_item_id')
-        quantity = request.POST.get('quantity')
+        food_item_ids = request.POST.getlist('food_item_id')
+        quantities = request.POST.getlist('quantity')
 
-        if not food_item_id or not quantity:
-            messages.error(request, "Please select a valid quantity.")
+        if not food_item_ids or not quantities:
+            messages.error(request, "Please select valid quantities for the food items.")
             return redirect('food_menu')
-        
-        food_item = get_object_or_404(FoodItem, id=food_item_id)
-        quantity = int(quantity)
 
-        if quantity <= 0:
-            messages.error(request, "Quantity must be greater than zero.")
+        # Filter out food items with quantity zero or less
+        selected_items = [(food_item_id, int(quantity)) for food_item_id, quantity in zip(food_item_ids, quantities) if int(quantity) > 0]
+
+        if not selected_items:
+            messages.error(request, "Please select at least one food item with a quantity greater than zero.")
             return redirect('food_menu')
-        
+
         order = Order.objects.create(
             guest=request.user,
             is_processed=False,
             total_price=0
         )
-        order.save()
-        
-        order_item = OrderItem.objects.create(
-            order=order,
-            food_item=food_item,
-            quantity = quantity
-        )
-        order_item.save()
 
-        order.total_price += food_item.price * quantity
+        total_price = 0
+        for food_item_id, quantity in selected_items:
+            food_item = get_object_or_404(FoodItem, id=food_item_id)
+            order_item = OrderItem.objects.create(
+                order=order,
+                food_item=food_item,
+                quantity=quantity
+            )
+            total_price += food_item.price * quantity
+
+        order.total_price = total_price
         order.save()
 
         messages.success(request, "Order placed successfully!")
         return redirect('view_orders')
 
     return render(request, 'food_menu.html', {'food_items': food_items})
+
+@login_required
+def food_item_details(request, food_item_id):
+    food_item = get_object_or_404(FoodItem, id=food_item_id)
+    return render(request, 'food_item_details.html', {'food_item': food_item})
 
 @login_required
 def view_orders(request):
@@ -288,6 +321,7 @@ def edit_room(request, room_id):
         price_per_night = request.POST.get('price_per_night')
         is_available = request.POST.get('is_available') == 'on'
         description = request.POST.get('description')
+        max_number = request.POST.get('max_number')
         image = request.FILES.get('image')
 
         if not room_number or not room_type or not price_per_night:
@@ -299,9 +333,10 @@ def edit_room(request, room_id):
         room.price_per_night = price_per_night
         room.is_available = is_available
         room.description = description
+        room.max_number = max_number
 
         if image:
-            room.image = image
+            room.room_image = image
 
         room.save()
         messages.success(request, "Room details updated successfully!")
@@ -389,10 +424,11 @@ def resuspend_user(request, user_id):
 @login_required
 def delete_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
+    room.delete()
     if request.method == "POST":
         room.delete()
         messages.success(request, "Room deleted successfully!")
-        return redirect('room_list')
+    return redirect('room_list')
     return render(request, 'delete_confirmation.html', {'item': room, 'type': 'Room'})
 
 @login_required

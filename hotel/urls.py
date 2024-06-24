@@ -36,4 +36,5 @@ urlpatterns = [
     path('order_details/<int:order_id>/', views.order_details, name='order_details'), 
     path('room_booking_details/<int:booking_id>/', views.room_booking_details, name='room_booking_details'),# Edit user details
     path('confirm_booking/<int:booking_id>/', views.confirm_booking, name='confirm_booking'),
+        path('food_item_details/<int:food_item_id>/', views.food_item_details, name='food_item_details'),  # Food item details
 ]

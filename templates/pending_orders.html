@@ -6,12 +6,7 @@
 <head>
     <title>Pending Orders</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
+
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -76,11 +71,11 @@
                 {% for item in order.order_items.all %}
                 <div class="order-item">
                     <p>{{ item.quantity }} x {{ item.food_item.name }}</p>
-                    <p>${{ item.food_item.price }}</p>
+                    <p>Tshs {{ item.food_item.price }}</p>
                 </div>
                 {% endfor %}
             </div>
-            <p class="total">Total: ${{ order.total_price }}</p>
+            <p class="total">Total: Tshs {{ order.total_price }}</p>
             <a href="{% url 'confirm_order' order.id %}" class="confirm-button">Confirm Order</a>
         </div>
         {% endfor %}

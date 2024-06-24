@@ -61,21 +61,51 @@
     
     }
     </style>
+    <script>
+        function validateLoginForm() {
+            let isValid = true;
+
+            // Clear previous error messages
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+            // Username validation
+            const username = document.getElementById("username").value;
+            if (username === "") {
+                document.getElementById("usernameError").textContent = "Username must be filled out";
+                isValid = false;
+            }
+
+            // Password validation
+            const password = document.getElementById("password").value;
+            if (password === "") {
+                document.getElementById("passwordError").textContent = "Password must be filled out";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
 </head>
 <body>
     <div class="login-container">
-<h2 class="title">Login</h2>
-        <form method="post" action="">
+        <h2 class="title">Login</h2>
+        <form method="post" action="" onsubmit="return validateLoginForm()">
+            {% for message in messages %}
+            <h2 style="text-align: center;color:red">{{message}}</h2>
+            {% endfor %}
             {% csrf_token %}
-            <input type="text" name="username"  placeholder="Enter your username" required><br>
-            <input type="password" name="password"  placeholder="Enter your password" required><br><br>
-            <button type="submit" id="button" name="login" class="button">Login</button>
-        </form><br>
-        <div class ="bottom-link">
-            Not a member?
-         <a href="{% url 'register' %}">Register</a>
+            <input type="text" id="username" name="username" placeholder="Enter your username" ><br>
+            <span id="usernameError" class="error"></span>
 
+            <input type="password" id="password" name="password" placeholder="Enter your password" ><br>
+            <span id="passwordError" class="error"></span><br>
+
+            <button type="submit" id="button" name="login" class="button">Login</button><br>
+        </form><br>
+        <div class="bottom-link">
+            Not a member?
+            <a href="{% url 'register' %}">Register</a>
+        </div>
     </div>
-    
 </body>
 </html>
