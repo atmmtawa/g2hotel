@@ -1,0 +1,85 @@
+{% extends 'side_bar.html' %}
+{% block main_b %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Item Details</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .food-item-details {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .food-item-details img {
+            width: 350px;
+            height: 350px;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .details {
+            flex: 1;
+        }
+        .details h3 {
+            margin: 0 0 10px;
+        }
+        .details p {
+            margin: 5px 0;
+        }
+        .back-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Food Item Details</h2>
+        <div class="food-item-details">
+            <img src="{{ food_item.image.url }}" alt="Food Image">
+            <div class="details">
+                <h3>{{ food_item.name }}</h3>
+                <p><strong>Description:</strong> {{ food_item.description }}</p>
+                <p><strong>Price:</strong> ${{ food_item.price }}</p>
+                <p><strong>Ingredients:</strong> {{ food_item.ingredients }}</p>
+                <p><strong>Availability:</strong> {% if food_item.is_available %}Available{% else %}Not Available{% endif %}</p>
+                {% if user.is_staff or user.is_manager %}
+                <a class="order-button" href="{% url 'edit_food_item' food_item.id %}">Edit</a>
+                <form method="post" action="{% url 'delete_food_item' food_item.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="order-button" style="background-color: red;">Delete</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{% url 'food_menu' %}" class="back-button">Back to Menu</a>
+    </div>
+</body>
+</html>
+{% endblock %}

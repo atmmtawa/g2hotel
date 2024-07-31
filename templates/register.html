@@ -55,33 +55,114 @@ h2{
     background-color: #005c78;
 
 }
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
 </style>
+<script>
+function validateForm() {
+    let isValid = true;
+
+    // Clear previous error messages
+    document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+    // Username validation
+    const username = document.forms["signupForm"]["username"].value;
+    if (username === "") {
+        document.getElementById("usernameError").textContent = "Username must be filled out";
+        isValid = false;
+    }
+
+    // Email validation
+    const email = document.forms["signupForm"]["email"].value;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format";
+        isValid = false;
+    }
+
+    // Phone number validation
+    const phoneNumber = document.forms["signupForm"]["phone_number"].value;
+    const phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(phoneNumber)) {
+        document.getElementById("phoneError").textContent = "Invalid phone number format. It should be 10 digits.";
+        isValid = false;
+    }
+
+    // Date of birth validation
+    const dob = document.forms["signupForm"]["d_o_b"].value;
+    if (dob === "") {
+        document.getElementById("dobError").textContent = "Date of birth must be filled out";
+        isValid = false;
+    }
+
+    // Password validation
+    const password = document.forms["signupForm"]["password1"].value;
+    const confirmPassword = document.forms["signupForm"]["password2"].value;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordPattern.test(password)) {
+        document.getElementById("passwordError").textContent = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+        isValid = false;
+    }signupForm
+
+    // Confirm password validation
+    if (password !== confirmPassword) {
+        document.getElementById("confirmPasswordError").textContent = "Passwords do not match";
+        isValid = false;
+    }
+
+    return isValid;
+}
+</script>
 <script src="{% static 'js/validation.js' %}" defer></script>
 </head>
 <body>
 <div class="registration-container">
-         <form  name="signupForm" onsubmit="return validateForm()" method="post">
-            {% csrf_token %}
-        <h2>Register</h2>
-            <input type="text" name="username" id="Name" placeholder="Your username" required><br>
-            <input type="email" name="email" id="Email" placeholder="Email" required><br>
-            <input type="tel" name="phone_number" id="phoneNumber" placeholder="Phone Number" required><br>
-            <input type="date" name="d_o_b" id="DOB" required><br>
-            <select name="gender" id="gender" required>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">other</option>
-            </select><br>
-            <input type="password" name="password1" id="password" placeholder="Password" required><br>
-            <input type="addess" name="address" id="adress" placeholder="Your address" required><br>
-            <input type="password" name="password2" id="confirmpassword" placeholder="Confirm Password" required><br>
-            <button type="submit" id="button" name="register" >Register</button><br><br>
-        </form>
-        <div class ="bottom-link">
-            Already a member?
-         <a href="login.html">Login</a>
+<form name="signupForm" onsubmit="return validateForm()" method="post">
+    {% csrf_token %}
+    <h2>Register</h2>
+    {% for message in messages %}
+    <h2 style="text-align: center;color:red">{{message}}</h2>
+    {% endfor %}
+    <input type="text" name="username" id="Name" placeholder="Your username"><br>
+    <span id="usernameError" class="error"></span>
 
-    </div>
+    <input type="email" name="email" id="Email" placeholder="Email"><br>
+    <span id="emailError" class="error"></span>
+
+    <input type="tel" name="phone_number" id="phoneNumber" placeholder="Phone Number"><br>
+    <span id="phoneError" class="error"></span>
+
+    <input type="date" name="d_o_b" id="DOB"><br>
+    <span id="dobError" class="error"></span>
+
+    <select name="gender" id="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select><br>
+
+    <input type="text" name="address" id="address" placeholder="Your address"><br>
+    <span id="addressError" class="error"></span>
+
+    <input type="password" name="password1" id="password" placeholder="Password"><br>
+    <span id="passwordError" class="error"></span>
+
+    <input type="password" name="password2" id="confirmpassword" placeholder="Confirm Password"><br>
+    <span id="confirmPasswordError" class="error"></span><br>
+
+    <button type="submit" id="button" name="register">Register</button><br><br>
+    <button type="reset" id="button1">Reset</button><br><br>
+
+</form>
+<div class="bottom-link">
+    Already a member?
+    <a href="{% url 'login' %}">Login</a>
+</div>
+</div>
 </body>
 </html>
 

@@ -1,21 +1,12 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     {% load static %}
-    <title>My Project</title>
+    <title>HMS</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-free-6.5.2-web/css/all.min.css'%}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        a{
+        a {
             text-decoration: none;
         }
         .sidebar {
@@ -111,6 +102,7 @@
             background-color: #333;
             color: #fff;
             padding: 10px 20px;
+            padding-bottom: 30px;
             position: fixed;
             top: 0;
             left: 250px;
@@ -141,80 +133,173 @@
             border-radius: 0 0 10px 10px;
             cursor: pointer;
             transition: background-color 0.3s;
-          }
+        }
+        #back-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            position: fixed;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #back-button:hover {
+            background-color: #0056b3;
+        }
+        #back-button i {
+            margin-right: 5px;
+        }
+        .sidebar .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .sidebar .profile .username {
+            font-size: 20px;
+            color: white;
+        }
+        .sidebar .profile .role {
+            font-size: 16px;
+            color: #999;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+        .col {
+            margin: 7px;
+        }
+        .profile-dropdown {
+            position: fixed;
+            display: inline-block;
+            right: 0;
+        }
+        .profile-dropdown img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .profile-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .profile-dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .profile-dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .profile-dropdown:hover .profile-dropdown-content {
+            display: block;
+        }
+        .dark-mode {
+            background-color: #1f2f3fcb;
+            color: #fff;
+        }
+        .dark-mode .sidebar {
+            background-color: #1f2f3f;
+        }
+        .dark-mode .sidebar .logo {
+            background-color: #1f2f3f;
+        }
+        .dark-mode .sidebar a {
+            color: #bbb;
+        }
+        .dark-mode input{
+            background-color: #284969;
+            color: white;
+        }
+        .dark-mode select{
+            background-color: #284969;
+            color: white;
+        }
+        .dark-mode th{
+            background-color: #284969;
+        }
+        .dark-mode textarea{
+            background-color: #284969;
+            color: white;
+        }
+        .dark-mode .sidebar a:hover {
+            background-color: #444;
+        }
+        .dark-mode .navbar {
+            background-color: #1f2f3f;
+        }
+        .dark-mode .profile-dropdown-content {
+            background-color: #333;
+            color: #fff;
+        }
+        .dark-mode .profile-dropdown-content a {
+            color: #bbb;
+        }
+        .dark-mode .profile-dropdown-content a:hover {
+            background-color: #444;
+        }
+        .dark-mode #back-button {
+            background-color: #555;
+        }
+        .dark-mode #back-button:hover {
+            background-color: #777;
+        }
+        .dark-mode .button-at-right {
+            background-color: #555;
+        }
+        .dark-mode .button-at-right:hover {
+            background-color: #777;
+        }
+        .dark-mode .card{
+            background-color: #1f2f3f;
+        }
+        .dark-mode .container{
+            background-color: #1f2f3f;
+        }
+        .dark-mode .sidebar{
+            background-color: #1f2f3f;
+        }
+        input, select{
+            outline: none;
+        }
     </style>
-</head>
-<body>
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
-    <div class="sidebar">
-        <div class="logo"><i>Crew Hotel</i></div>
-        <a href="{% url 'home' %}">
-            <i class="fas fa-home icon"></i>
-            <span class="title">Home</span>
-        </a>
-        <a href="{% url 'room_list' %}">
-            <i class="fas fa-bed icon"></i>
-            <span class="title">Rooms</span>
-        </a>
-        {% if user.is_guest %}
-        <a href="{% url 'view_bookings' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Bookings</span>
-        </a>
-        <a href="{% url 'view_orders' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">My orders</span>
-        </a>
-        {% endif %}
-        {% if user.is_staff %}
-        <a href="{% url 'view_pending_orders' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Pending orders</span>
-        </a>
-        {% endif %}
-        {% if user.is_staff or user.is_manager %}
-        <a href="{% url 'all_bookings' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Bookings</span>
-        </a>
-        {% endif %}
-        <a href="{% url 'food_menu' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Food Menu Item</span>
-        </a>
-        {% if user.is_manager %}
-        <a href="{% url 'staff_list' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">Staff List</span>
-        </a>
-        <a href="{% url 'all_orders' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">All Food Orders</span>
-        </a>
-        <a href="{% url 'all_users' %}">
-            <i class="fas fa-book icon"></i>
-            <span class="title">All Users</span>
-        </a>
-        {% endif %}
-        <a href="{% url 'logout' %}">
-            <i class="fas fa-sign-out-alt icon"></i>
-            <span class="title">Logout</span>
-        </a>
-    </div>
-    <div class="main-content">
-        <div class="navbar">
-            <h1>My Project</h1>
-        </div>
-        {% for message in messages %}
-        <h4 style="text-align: center; color: rgb(255, 208, 0); margin-top: 15px; z-index: 9">{{ message }}</h4>
-        {% endfor %}
-        <div class="content-wrapper">
-            {% block main_b %}
-            {% endblock %}
-        </div>
-    </div>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backButton = document.getElementById('back-button');
+            const loginUrl = 'http://127.0.0.1:8000/login/';
+
+            if (document.referrer === loginUrl) {
+                backButton.style.display = 'none';
+            }
+
+            const toggleThemeButton = document.getElementById('toggle-theme-button');
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', currentTheme === 'dark');
+
+            toggleThemeButton.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const newTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+            });
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+
         function toggleMenu() {
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
@@ -234,5 +319,108 @@
             mainContent.classList.toggle('hide');
         }
     </script>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar">
+        <div class="logo"><i>Crew Hotel</i></div>
+        <div class="profile">
+            <a href="{% url 'home'%}">
+                <div class="row">
+                    <div class="col">
+                        <img src="{% static 'images/Profile.png'%}" alt="Profile Image">
+                    </div>
+                    <div class="col" style="margin-top: 7px;">
+                        <div class="username">{{ user.username }}</div>
+                        <div class="role">
+                            {% if user.is_manager %}
+                                Manager
+                            {% elif user.is_staff %}
+                                Staff
+                            {% elif user.is_guest %}
+                                Guest
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <a href="{% url 'home' %}">
+            <i class="fas fa-home icon"></i>
+            <span class="title">Home</span>
+        </a>
+        <a href="{% url 'room_list' %}">
+            <i class="fas fa-bed icon"></i>
+            <span class="title">Rooms</span>
+        </a>
+        {% if user.is_guest %}
+        <a href="{% url 'view_bookings' %}">
+            <i class="fas fa-calendar-alt icon"></i>
+            <span class="title">My Bookings</span>
+        </a>
+        <a href="{% url 'view_orders' %}">
+            <i class="fas fa-utensils icon"></i>
+            <span class="title">My Orders</span>
+        </a>
+        {% endif %}
+        {% if user.is_staff %}
+        <a href="{% url 'view_pending_orders' %}">
+            <i class="fas fa-clock icon"></i>
+            <span class="title">Pending Orders</span>
+        </a>
+        {% endif %}
+        {% if user.is_staff or user.is_manager %}
+        <a href="{% url 'all_bookings' %}">
+            <i class="fas fa-calendar-check icon"></i>
+            <span class="title">Bookings</span>
+        </a>
+        {% endif %}
+        <a href="{% url 'food_menu' %}">
+            <i class="fas fa-hamburger icon"></i>
+            <span class="title">Food Menu Item</span>
+        </a>
+        {% if user.is_manager %}
+        <a href="{% url 'staff_list' %}">
+            <i class="fas fa-users icon"></i>
+            <span class="title">Staff List</span>
+        </a>
+        <a href="{% url 'all_orders' %}">
+            <i class="fas fa-clipboard-list icon"></i>
+            <span class="title">All Food Orders</span>
+        </a>
+        <a href="{% url 'all_users' %}">
+            <i class="fas fa-user-friends icon"></i>
+            <span class="title">All Users</span>
+        </a>
+        {% endif %}
+    </div>
+    
+    <div class="main-content">
+        <div class="navbar row">
+            <h1 class="col">Hotel Management System</h1>
+            <div class="profile-dropdown col">
+                <img src="{% static 'images/Profile.png'%}" alt="Profile Image">
+                <div class="profile-dropdown-content">
+                    <a href="{% url 'view_user_details' user.id %}">Profile</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+        <button id="back-button" onclick="goBack()" style="display: flex; align-items: center; margin-top: 50px; margin-bottom: -15px; z-index:9">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button id="toggle-theme-button" style="display: flex; align-items: center; margin-top: 50px; margin-bottom: -15px; z-index:9; right: 120px; position: fixed;">
+            <i class="fas fa-adjust"></i> Toggle Theme
+        </button>
+        {% for message in messages %}
+       <center><h4 style="text-align: center; background-color: rgb(255, 208, 0); z-index: 9; padding: 7px;width:50%">{{ message }}</h4></center>
+        {% endfor %}
+
+        <div class="content-wrapper">
+            {% block main_b %}
+            {% endblock %}
+        </div>
+    </div>
 </body>
 </html>
